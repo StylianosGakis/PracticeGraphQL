@@ -72,14 +72,16 @@ dependencies {
     implementation(Libs.AndroidX.Compose.material)
     implementation(Libs.AndroidX.Compose.uiTooling)
 
+    // DI
     implementation(Libs.AndroidX.Dagger.hiltAndroid)
     kapt(Libs.AndroidX.Dagger.hiltAndroidCompilerKapt)
-
     implementation(Libs.AndroidX.Dagger.hiltLifecycleViewModel)
     kapt(Libs.AndroidX.Dagger.hiltCompilerKapt)
 
+    // Navigation
     implementation(Libs.AndroidX.Navigation.compose)
     implementation(Libs.AndroidX.Dagger.hiltNavigationCompose)
+    implementation(Libs.AndroidX.Accompanist.animatedNavigation)
 
     implementation(Libs.AndroidX.Lifecycle.runtime)
     implementation(Libs.AndroidX.Lifecycle.viewModelSavedState)

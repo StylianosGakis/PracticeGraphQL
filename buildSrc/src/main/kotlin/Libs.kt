@@ -15,6 +15,11 @@ object Libs {
         const val appCompat = "androidx.appcompat:appcompat:1.3.1"
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
 
+        object Accompanist {
+            private const val accompanistVersion = "0.17.0"
+            const val animatedNavigation = "com.google.accompanist:accompanist-navigation-animation:$accompanistVersion"
+        }
+
         object Compose {
             const val ui = "androidx.compose.ui:ui:${CommonVersions.compose}"
             const val material = "androidx.compose.material:material:${CommonVersions.compose}"
