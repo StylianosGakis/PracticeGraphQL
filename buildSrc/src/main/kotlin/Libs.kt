@@ -18,12 +18,28 @@ object Libs {
         object Compose {
             const val ui = "androidx.compose.ui:ui:${CommonVersions.compose}"
             const val material = "androidx.compose.material:material:${CommonVersions.compose}"
-            const val uiTooling = "androidx.compose.ui:ui-tooling-preview:${CommonVersions.compose}"
+            const val uiTooling = "androidx.compose.ui:ui-tooling:${CommonVersions.compose}"
+        }
+
+        object Dagger {
+            const val hiltNavigationCompose = "androidx.hilt:hilt-navigation-compose:1.0.0-alpha03"
+
+            const val hiltAndroid = "com.google.dagger:hilt-android:${CommonVersions.hilt}"
+            const val hiltAndroidCompilerKapt = "com.google.dagger:hilt-android-compiler:${CommonVersions.hilt}"
+
+            private const val androidxHiltVersion = "1.0.0-alpha03"
+            const val hiltLifecycleViewModel = "androidx.hilt:hilt-lifecycle-viewmodel:$androidxHiltVersion"
+            const val hiltCompilerKapt = "androidx.hilt:hilt-compiler:$androidxHiltVersion"
         }
 
         object Lifecycle {
-            private const val runtimeVersion = "2.4.0-alpha01"
+            private const val runtimeVersion = "2.4.0-alpha03"
             const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$runtimeVersion"
+            const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$runtimeVersion"
+        }
+
+        object Navigation {
+            const val compose = "androidx.navigation:navigation-compose:2.4.0-alpha07"
         }
     }
 }

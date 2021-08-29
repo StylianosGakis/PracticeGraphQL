@@ -1,6 +1,8 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("kotlin-kapt")
+    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -70,5 +72,15 @@ dependencies {
     implementation(Libs.AndroidX.Compose.material)
     implementation(Libs.AndroidX.Compose.uiTooling)
 
+    implementation(Libs.AndroidX.Dagger.hiltAndroid)
+    kapt(Libs.AndroidX.Dagger.hiltAndroidCompilerKapt)
+
+    implementation(Libs.AndroidX.Dagger.hiltLifecycleViewModel)
+    kapt(Libs.AndroidX.Dagger.hiltCompilerKapt)
+
+    implementation(Libs.AndroidX.Navigation.compose)
+    implementation(Libs.AndroidX.Dagger.hiltNavigationCompose)
+
     implementation(Libs.AndroidX.Lifecycle.runtime)
+    implementation(Libs.AndroidX.Lifecycle.viewModelSavedState)
 }

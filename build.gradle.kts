@@ -7,6 +7,7 @@ buildscript {
         classpath(BuildLibs.AndroidGradlePlugin)
         classpath(BuildLibs.KotlinPlugin)
         classpath(BuildLibs.ApolloPlugin)
+        classpath(BuildLibs.HiltPlugin)
     }
 }
 
