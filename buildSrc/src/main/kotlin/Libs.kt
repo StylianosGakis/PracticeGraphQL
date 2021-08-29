@@ -38,9 +38,9 @@ object Libs {
         }
 
         object Lifecycle {
-            private const val runtimeVersion = "2.4.0-alpha03"
-            const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$runtimeVersion"
-            const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$runtimeVersion"
+            private const val version = "2.4.0-alpha03"
+            const val runtime = "androidx.lifecycle:lifecycle-runtime-ktx:$version"
+            const val viewModelSavedState = "androidx.lifecycle:lifecycle-viewmodel-savedstate:$version"
         }
 
         object Navigation {
