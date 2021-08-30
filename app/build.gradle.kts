@@ -83,6 +83,9 @@ dependencies {
     implementation(Libs.AndroidX.Dagger.hiltNavigationCompose)
     implementation(Libs.AndroidX.Accompanist.animatedNavigation)
 
+    // Image Loading
+    implementation(Libs.Coil.compose)
+
     implementation(Libs.AndroidX.Lifecycle.runtime)
     implementation(Libs.AndroidX.Lifecycle.viewModelSavedState)
 }

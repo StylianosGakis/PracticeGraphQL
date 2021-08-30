@@ -47,4 +47,8 @@ object Libs {
             const val compose = "androidx.navigation:navigation-compose:2.4.0-alpha07"
         }
     }
+
+    object Coil {
+        const val compose = "io.coil-kt:coil-compose:1.3.2"
+    }
 }

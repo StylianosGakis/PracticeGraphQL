@@ -1,4 +1,4 @@
-package xyz.stylianosgakis.practicegraphql.main
+package xyz.stylianosgakis.practicegraphql.feature.launches
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,23 +16,27 @@ import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
-class MainViewModel @Inject constructor(
+class LaunchesViewModel @Inject constructor(
     apolloClient: ApolloClient,
 ) : ViewModel() {
-    val viewState: StateFlow<MainViewState> = apolloClient
+    val viewState: StateFlow<LaunchesViewState> = apolloClient
         .query(LaunchListQuery())
         .watcher()
         .toFlow()
         .map { response: Response<LaunchListQuery.Data> ->
             if (response.hasErrors()) {
-                return@map MainViewState.Error
+                return@map LaunchesViewState.Error
             }
-            val responseData = response.data ?: return@map MainViewState.Error
-            MainViewState.Data(responseData.launches)
+            val responseData: LaunchListQuery.Data = response.data ?: return@map LaunchesViewState.Error
+            val launchList = responseData
+                .launches
+                .launches
+                .filterNotNull()
+            LaunchesViewState.Data(launchList)
         }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5000),
-            initialValue = MainViewState.Loading
+            initialValue = LaunchesViewState.Loading
         )
 }
