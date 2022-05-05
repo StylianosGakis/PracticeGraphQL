@@ -2,9 +2,8 @@ package xyz.stylianosgakis.practicegraphql.feature.launches
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.coroutines.toFlow
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.ApolloResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.SharingStarted
@@ -21,13 +20,13 @@ class LaunchesViewModel @Inject constructor(
 ) : ViewModel() {
     val viewState: StateFlow<LaunchesViewState> = apolloClient
         .query(LaunchListQuery())
-        .watcher()
         .toFlow()
-        .map { response: Response<LaunchListQuery.Data> ->
+        .map { response: ApolloResponse<LaunchListQuery.Data> ->
             if (response.hasErrors()) {
                 return@map LaunchesViewState.Error
             }
-            val responseData: LaunchListQuery.Data = response.data ?: return@map LaunchesViewState.Error
+            val responseData: LaunchListQuery.Data =
+                response.data ?: return@map LaunchesViewState.Error
             val launchList = responseData
                 .launches
                 .launches

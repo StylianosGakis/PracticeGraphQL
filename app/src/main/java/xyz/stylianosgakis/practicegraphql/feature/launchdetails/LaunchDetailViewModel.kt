@@ -3,9 +3,8 @@ package xyz.stylianosgakis.practicegraphql.feature.launchdetails
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.Response
-import com.apollographql.apollo.coroutines.toFlow
+import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.api.ApolloResponse
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
@@ -32,9 +31,9 @@ class LaunchDetailViewModel @Inject constructor(
     val viewState: StateFlow<LaunchDetailViewState> = launchIdState
         .filterNotNull()
         .flatMapConcat { id: String ->
-            apolloClient.query(LaunchDetailsQuery(id)).watcher().toFlow()
+            apolloClient.query(LaunchDetailsQuery(id)).toFlow()
         }
-        .map { response: Response<LaunchDetailsQuery.Data> ->
+        .map { response: ApolloResponse<LaunchDetailsQuery.Data> ->
             if (response.hasErrors()) {
                 return@map LaunchDetailViewState.Error
             }

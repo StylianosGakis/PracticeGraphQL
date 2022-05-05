@@ -1,6 +1,6 @@
 package xyz.stylianosgakis.practicegraphql
 
-import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo3.ApolloClient
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,7 +14,7 @@ object AppModule {
     @Singleton
     @Provides
     fun provideApolloClient(): ApolloClient {
-        return ApolloClient.builder()
+        return ApolloClient.Builder()
             .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
             .build()
     }

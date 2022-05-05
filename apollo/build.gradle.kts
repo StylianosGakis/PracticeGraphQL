@@ -1,11 +1,12 @@
 plugins {
     id("com.android.library")
     id("kotlin-android")
-    id("com.apollographql.apollo")
+    id("com.apollographql.apollo3")
 }
 
 apollo {
     generateKotlinModels.set(true)
+    packageNamesFromFilePaths()
 }
 
 android {
@@ -40,6 +41,4 @@ dependencies {
     implementation(Libs.kotlin)
 
     api(Libs.Apollo.runtime)
-    api(Libs.Apollo.android)
-    api(Libs.Apollo.coroutines)
 }

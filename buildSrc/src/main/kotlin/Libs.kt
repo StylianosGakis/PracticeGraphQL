@@ -4,9 +4,7 @@ object Libs {
     const val materialComponents = "com.google.android.material:material:1.4.0"
 
     object Apollo {
-        const val runtime = "com.apollographql.apollo:apollo-runtime:${CommonVersions.apollo}"
-        const val android = "com.apollographql.apollo:apollo-android-support:${CommonVersions.apollo}"
-        const val coroutines = "com.apollographql.apollo:apollo-coroutines-support:${CommonVersions.apollo}"
+        const val runtime = "com.apollographql.apollo3:apollo-runtime:${CommonVersions.apollo}"
     }
 
     object AndroidX {
