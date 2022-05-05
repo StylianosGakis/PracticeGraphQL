@@ -6,6 +6,13 @@ plugins {
 
 apollo {
     generateKotlinModels.set(true)
+
+    generateTestBuilders.set(true)
+    testDirConnection {
+        // Make test builders available to main (not just test or androidTest) to be used by our mock data
+        connectToAndroidSourceSet("main")
+    }
+
     packageNamesFromFilePaths()
 }
 
@@ -40,5 +47,5 @@ android {
 dependencies {
     implementation(Libs.kotlin)
 
-    api(Libs.Apollo.runtime)
+    implementation(Libs.Apollo.runtime)
 }

@@ -60,7 +60,13 @@ android {
 }
 
 dependencies {
+    testImplementation("junit:junit:4.13.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.1")
+    implementation("org.jetbrains.kotlinx:atomicfu:0.17.0")
+
     implementation(project(":apollo"))
+    testImplementation(project(":apollo"))
 
     implementation(Libs.AndroidX.appCompat)
 
@@ -71,6 +77,11 @@ dependencies {
     implementation(Libs.AndroidX.Compose.ui)
     implementation(Libs.AndroidX.Compose.material)
     implementation(Libs.AndroidX.Compose.uiTooling)
+
+    // Apollo
+    implementation(Libs.Apollo.runtime)
+    testImplementation(Libs.Apollo.testingSupport)
+    androidTestImplementation(Libs.Apollo.testingSupport)
 
     // DI
     implementation(Libs.AndroidX.Dagger.hiltAndroid)

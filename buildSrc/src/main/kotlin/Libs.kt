@@ -5,6 +5,7 @@ object Libs {
 
     object Apollo {
         const val runtime = "com.apollographql.apollo3:apollo-runtime:${CommonVersions.apollo}"
+        const val testingSupport = "com.apollographql.apollo3:apollo-testing-support:${CommonVersions.apollo}"
     }
 
     object AndroidX {
