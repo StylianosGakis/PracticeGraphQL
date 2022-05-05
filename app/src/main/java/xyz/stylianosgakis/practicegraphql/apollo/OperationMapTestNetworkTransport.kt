@@ -55,13 +55,13 @@ class OperationMapTestNetworkTransport : NetworkTransport {
 @ApolloExperimental
 fun <D : Operation.Data> ApolloClient.registerMapTestResponse(
     operationClass: KClass<out Operation<D>>,
-    fakeOperationInstance: Operation<D>,
+    ignoredOperationInstance: Operation<D>,
     responseData: D,
 ) {
     val operationMapTestNetworkTransport = (networkTransport as? OperationMapTestNetworkTransport)
         ?: error("Apollo: ApolloClient.registerTestResponse() can be used only with MapTestNetworkTransport")
     val response = ApolloResponse.Builder(
-        fakeOperationInstance,
+        ignoredOperationInstance,
         requestUuid = uuid4(),
         data = responseData
     ).build()
