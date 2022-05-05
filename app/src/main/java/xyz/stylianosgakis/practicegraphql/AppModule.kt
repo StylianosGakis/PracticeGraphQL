@@ -13,9 +13,10 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideApolloClient(): ApolloClient {
+    fun provideApolloClient(loggingInterceptor: LoggingInterceptor): ApolloClient {
         return ApolloClient.Builder()
             .serverUrl("https://apollo-fullstack-tutorial.herokuapp.com/graphql")
+            .addInterceptor(loggingInterceptor)
             .build()
     }
 }
