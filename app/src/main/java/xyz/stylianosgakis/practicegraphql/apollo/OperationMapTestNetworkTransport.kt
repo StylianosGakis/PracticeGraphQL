@@ -7,6 +7,7 @@ import com.apollographql.apollo3.api.ApolloRequest
 import com.apollographql.apollo3.api.ApolloResponse
 import com.apollographql.apollo3.api.CompiledField
 import com.apollographql.apollo3.api.CustomScalarAdapters
+import com.apollographql.apollo3.api.Error
 import com.apollographql.apollo3.api.Operation
 import com.apollographql.apollo3.api.json.JsonWriter
 import com.apollographql.apollo3.exception.ApolloNetworkException
@@ -58,67 +59,59 @@ class OperationMapTestNetworkTransport : NetworkTransport {
 
 @ApolloExperimental
 fun <D : Operation.Data> ApolloClient.registerMapTestResponse(
-    operationClass: KClass<out Operation<D>>,
-    responseData: D,
-) {
-    val operationMapTestNetworkTransport = (networkTransport as? OperationMapTestNetworkTransport)
-        ?: error("Apollo: ApolloClient.registerTestResponse() can be used only with MapTestNetworkTransport")
-    val response = ApolloResponse.Builder(
-        dummyOperation(),
-        requestUuid = uuid4(),
-        data = responseData
-    ).build()
-    operationMapTestNetworkTransport.register(operationClass, response)
-}
-
-fun <D : Operation.Data> dummyOperation(): Operation<D> {
-    return object : Operation<D> {
-        override fun adapter(): Adapter<D> { TODO("Not yet implemented") }
-        override fun document(): String { TODO("Not yet implemented") }
-        override fun id(): String { TODO("Not yet implemented") }
-        override fun name(): String { TODO("Not yet implemented") }
-        override fun rootField(): CompiledField { TODO("Not yet implemented") }
-        override fun serializeVariables(
-            writer: JsonWriter,
-            customScalarAdapters: CustomScalarAdapters,
-        ) { TODO("Not yet implemented") }
-    }
-}
+    operation: KClass<out Operation<D>>,
+    response: ApolloResponse<D>,
+) = (networkTransport as? OperationMapTestNetworkTransport)?.register(operation, response)
+    ?: error("Apollo: ApolloClient.registerMapTestResponse() can be used only with OperationMapTestNetworkTransport")
 
 @ApolloExperimental
 fun <D : Operation.Data> ApolloClient.registerMapTestResponse(
     operationClass: KClass<out Operation<D>>,
-    ignoredOperationInstance: Operation<D>,
-    responseData: D,
-) {
-    val operationMapTestNetworkTransport = (networkTransport as? OperationMapTestNetworkTransport)
-        ?: error("Apollo: ApolloClient.registerTestResponse() can be used only with MapTestNetworkTransport")
-    val response = ApolloResponse.Builder(
-        ignoredOperationInstance,
-        requestUuid = uuid4(),
-        data = responseData
-    ).build()
-    operationMapTestNetworkTransport.register(operationClass, response)
-}
-
-/* Can't quite get this shape to work since we need to construct an instance of the `Operation` somehow
-@ApolloExperimental
-fun <D : Operation.Data> ApolloClient.registerMapTestResponse(
-    operation: Operation<D>,
     data: D? = null,
     errors: List<Error>? = null,
 ) = registerMapTestResponse(
-    operation,
+    operationClass,
     ApolloResponse.Builder(
-        operation = operation,
+        operation = dummyOperation(),
         requestUuid = uuid4(),
         data = data
     )
         .errors(errors)
         .build()
-)*/
+)
 
 @ApolloExperimental
 fun <D : Operation.Data> ApolloClient.registerMapTestNetworkError(operation: KClass<out Operation<D>>) =
     (networkTransport as? OperationMapTestNetworkTransport)?.registerNetworkError(operation)
         ?: error("Apollo: ApolloClient.registerTestNetworkError() can be used only with OperationMapTestNetworkTransport")
+
+fun <D : Operation.Data> dummyOperation(): Operation<D> {
+    return object : Operation<D> {
+        override fun adapter(): Adapter<D> {
+            TODO("Not yet implemented")
+        }
+
+        override fun document(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun id(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun name(): String {
+            TODO("Not yet implemented")
+        }
+
+        override fun rootField(): CompiledField {
+            TODO("Not yet implemented")
+        }
+
+        override fun serializeVariables(
+            writer: JsonWriter,
+            customScalarAdapters: CustomScalarAdapters,
+        ) {
+            TODO("Not yet implemented")
+        }
+    }
+}

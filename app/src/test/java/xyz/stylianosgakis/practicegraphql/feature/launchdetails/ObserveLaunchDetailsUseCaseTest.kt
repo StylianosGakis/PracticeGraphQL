@@ -102,7 +102,6 @@ class ObserveLaunchDetailsUseCaseTest {
             .build()
         apolloClient.registerMapTestResponse(
             LaunchDetailsQuery::class,
-            LaunchDetailsQuery(""), // Can create a "wrong" instance of the operation here to make it compile
             expectedData
         )
         val useCase = ObserveLaunchDetailsUseCase(apolloClient)
@@ -113,18 +112,30 @@ class ObserveLaunchDetailsUseCaseTest {
     }
 
     @Test
-    fun `query using operation type map transport and dummyOperation`() = runTest {
-        val apolloClient = ApolloClient.Builder()
-            .networkTransport(OperationMapTestNetworkTransport())
-            .build()
-        apolloClient.registerMapTestResponse(
-            LaunchDetailsQuery::class,
-            expectedData
-        )
-        val useCase = ObserveLaunchDetailsUseCase(apolloClient)
+    fun `query using operation type map transport that responds with data and errors`() =
+        runTest {
+            val apolloClient = ApolloClient.Builder()
+                .networkTransport(OperationMapTestNetworkTransport())
+                .build()
+            val errorsList = List(3) { index ->
+                com.apollographql.apollo3.api.Error(
+                    "Error message#$index",
+                    locations = null,
+                    path = listOf(),
+                    extensions = mapOf(),
+                    nonStandardFields = mapOf()
+                )
+            }
+            apolloClient.registerMapTestResponse(
+                LaunchDetailsQuery::class,
+                expectedData,
+                errorsList
+            )
+            val useCase = ObserveLaunchDetailsUseCase(apolloClient)
 
-        val result = useCase.invoke(launchId).first()
+            val result = useCase.invoke(launchId).first()
 
-        Assert.assertEquals(expectedData, result.data)
-    }
+            Assert.assertEquals(expectedData, result.data)
+            Assert.assertEquals(errorsList, result.errors)
+        }
 }
