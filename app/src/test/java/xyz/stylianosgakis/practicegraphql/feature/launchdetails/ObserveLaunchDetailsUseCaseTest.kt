@@ -79,6 +79,23 @@ class ObserveLaunchDetailsUseCaseTest {
     }
 
     @Test
+    fun `failing query using operation type map transport`() = runTest {
+        val apolloClient = ApolloClient.Builder()
+            .networkTransport(OperationMapTestNetworkTransport())
+            .build()
+        apolloClient.registerMapTestNetworkError(LaunchDetailsQuery::class)
+        val useCase = ObserveLaunchDetailsUseCase(apolloClient)
+
+        var didThrow = false
+        try {
+            useCase.invoke(launchId).first()
+        } catch (e: ApolloNetworkException) {
+            didThrow = true
+        }
+        Assert.assertTrue(didThrow)
+    }
+
+    @Test
     fun `query using operation type map transport`() = runTest {
         val apolloClient = ApolloClient.Builder()
             .networkTransport(OperationMapTestNetworkTransport())
@@ -96,19 +113,18 @@ class ObserveLaunchDetailsUseCaseTest {
     }
 
     @Test
-    fun `failing query using operation type map transport`() = runTest {
+    fun `query using operation type map transport and dummyOperation`() = runTest {
         val apolloClient = ApolloClient.Builder()
             .networkTransport(OperationMapTestNetworkTransport())
             .build()
-        apolloClient.registerMapTestNetworkError(LaunchDetailsQuery::class)
+        apolloClient.registerMapTestResponse(
+            LaunchDetailsQuery::class,
+            expectedData
+        )
         val useCase = ObserveLaunchDetailsUseCase(apolloClient)
 
-        var didThrow = false
-        try {
-            useCase.invoke(launchId).first()
-        } catch (e: ApolloNetworkException) {
-            didThrow = true
-        }
-        Assert.assertTrue(didThrow)
+        val result = useCase.invoke(launchId).first()
+
+        Assert.assertEquals(expectedData, result.data)
     }
 }

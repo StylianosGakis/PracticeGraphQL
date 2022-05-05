@@ -2,9 +2,13 @@ package xyz.stylianosgakis.practicegraphql.apollo
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.annotations.ApolloExperimental
+import com.apollographql.apollo3.api.Adapter
 import com.apollographql.apollo3.api.ApolloRequest
 import com.apollographql.apollo3.api.ApolloResponse
+import com.apollographql.apollo3.api.CompiledField
+import com.apollographql.apollo3.api.CustomScalarAdapters
 import com.apollographql.apollo3.api.Operation
+import com.apollographql.apollo3.api.json.JsonWriter
 import com.apollographql.apollo3.exception.ApolloNetworkException
 import com.apollographql.apollo3.network.NetworkTransport
 import com.benasher44.uuid.uuid4
@@ -50,6 +54,35 @@ class OperationMapTestNetworkTransport : NetworkTransport {
     }
 
     override fun dispose() {}
+}
+
+@ApolloExperimental
+fun <D : Operation.Data> ApolloClient.registerMapTestResponse(
+    operationClass: KClass<out Operation<D>>,
+    responseData: D,
+) {
+    val operationMapTestNetworkTransport = (networkTransport as? OperationMapTestNetworkTransport)
+        ?: error("Apollo: ApolloClient.registerTestResponse() can be used only with MapTestNetworkTransport")
+    val response = ApolloResponse.Builder(
+        dummyOperation(),
+        requestUuid = uuid4(),
+        data = responseData
+    ).build()
+    operationMapTestNetworkTransport.register(operationClass, response)
+}
+
+fun <D : Operation.Data> dummyOperation(): Operation<D> {
+    return object : Operation<D> {
+        override fun adapter(): Adapter<D> { TODO("Not yet implemented") }
+        override fun document(): String { TODO("Not yet implemented") }
+        override fun id(): String { TODO("Not yet implemented") }
+        override fun name(): String { TODO("Not yet implemented") }
+        override fun rootField(): CompiledField { TODO("Not yet implemented") }
+        override fun serializeVariables(
+            writer: JsonWriter,
+            customScalarAdapters: CustomScalarAdapters,
+        ) { TODO("Not yet implemented") }
+    }
 }
 
 @ApolloExperimental
