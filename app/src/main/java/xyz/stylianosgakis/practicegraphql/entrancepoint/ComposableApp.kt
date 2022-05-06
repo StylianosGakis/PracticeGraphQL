@@ -4,7 +4,7 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavType
-import androidx.navigation.compose.navArgument
+import androidx.navigation.navArgument
 import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
@@ -24,10 +24,10 @@ fun ComposableApp() {
     AnimatedNavHost(
         navController = navController,
         startDestination = Screen.Main.route,
-        enterTransition = { _, _ -> slideAndFadeIn(from = Direction.Right) },
-        exitTransition = { _, _ -> slideAndFadeOut(to = Direction.Left) },
-        popEnterTransition = { _, _ -> slideAndFadeIn(from = Direction.Left) },
-        popExitTransition = { _, _ -> slideAndFadeOut(to = Direction.Right) },
+        enterTransition = { slideAndFadeIn(from = Direction.Right) },
+        exitTransition = { slideAndFadeOut(to = Direction.Left) },
+        popEnterTransition = { slideAndFadeIn(from = Direction.Left) },
+        popExitTransition = { slideAndFadeOut(to = Direction.Right) },
     ) {
         composable(Screen.Main.route) {
             MainScreen(navActions)

@@ -15,7 +15,7 @@ object Libs {
         const val coreKtx = "androidx.core:core-ktx:1.6.0"
 
         object Accompanist {
-            private const val accompanistVersion = "0.17.0"
+            private const val accompanistVersion = "0.24.7-alpha"
             const val animatedNavigation = "com.google.accompanist:accompanist-navigation-animation:$accompanistVersion"
         }
 
